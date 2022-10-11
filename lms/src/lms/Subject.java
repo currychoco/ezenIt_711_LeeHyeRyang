@@ -8,6 +8,11 @@ public class Subject {
 		this.title = title;
 	}
 	
+	public Subject(String title, int score) {
+		this.title = title;
+		this.score = score;
+	}
+	
 	
 	//getter & setter
 	public String getTitle() {
@@ -20,5 +25,10 @@ public class Subject {
 	//점수 수정
 	public void setScore(int score) {
 		this.score = score;
+	}
+	
+	@Override
+	public String toString() {
+		return this.title + "(" + this.score + ")";
 	}
 }

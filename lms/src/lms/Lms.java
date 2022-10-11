@@ -1,8 +1,8 @@
 package lms;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -101,7 +101,7 @@ public class Lms {
 		this.students.add(new Student(number, name));
 		System.out.print("학생이 수강할 기본 과목 : ");
 		String title = this.sc.next();
-		this.students.get(this.students.size() - 1).addSubject(title);
+		this.students.get(this.students.size() - 1).addSubject(new Subject(title));
 	}
 
 	// 과목 추가
@@ -116,7 +116,7 @@ public class Lms {
 
 		System.out.print("추가할 과목 이름 : ");
 		String title = this.sc.next();
-		this.students.get(idx).addSubject(title);
+		this.students.get(idx).addSubject(new Subject(title));
 		this.students.get(idx).calculateGrade();
 	}
 
@@ -133,7 +133,7 @@ public class Lms {
 		System.out.print("성적을 수정할 과목 이름 : ");
 		String title = this.sc.next();
 
-		ArrayList<String> subjectTitles = this.students.get(idx).getSubjectTitle();
+		List<String> subjectTitles = this.students.get(idx).getSubjectsTitle();
 
 		boolean isExistSubject = false;
 		int subjectIdx = -1;
@@ -182,7 +182,7 @@ public class Lms {
 		}
 		System.out.print("삭제할 과목 이름 : ");
 		String title = this.sc.next();
-		ArrayList<String> subjectTitle = this.students.get(idx).getSubjectTitle();
+		List<String> subjectTitle = this.students.get(idx).getSubjectsTitle();
 
 		boolean isExistSubjectTitle = false;
 		int subjectIdx = -1;
@@ -226,7 +226,7 @@ public class Lms {
 		for (int i = 0; i < this.students.size(); i++) {
 			data += this.students.get(i).getNumber() + "/" + this.students.get(i).getName() + "/"
 					+ this.students.get(i).getGrade() + "/";
-			ArrayList<String> titles = this.students.get(i).getSubjectTitle();
+			List<String> titles = this.students.get(i).getSubjectsTitle();
 			for (int j = 0; j < titles.size(); j++) {
 				data += titles.get(j);
 				if (j < titles.size() - 1) {
@@ -236,7 +236,7 @@ public class Lms {
 				}
 			}
 			for (int j = 0; j < titles.size(); j++) {
-				data += this.students.get(i).getScore(j);
+				data += this.students.get(i).getSubjects().get(j).getScore();
 				if (j < titles.size() - 1) {
 					data += ",";
 				}
@@ -257,18 +257,39 @@ public class Lms {
 			return;
 		}
 
+		this.students = new ArrayList<>();
+
 		String[] temp = data.split("\n");
-		String[][] studentsDataTemp = new String[temp.length][5];
 		for (int i = 0; i < temp.length; i++) {
-			studentsDataTemp[i] = temp[i].split("/");
-			System.out.println(Arrays.toString(studentsDataTemp[i])); // 확인
+			String[] arr = temp[i].split("/");
+
+			String numStr = arr[0];
+			String name = arr[1];
+			String grade = arr[2];
+			String[] subjectArr = arr[3].split(",");
+			String[] scoreStrArr = arr[4].split(",");
+
+			List<Subject> subjects = new ArrayList<>();
+			for (int j = 0; j < subjectArr.length; j++) {
+				String title = subjectArr[j];
+				int score = Integer.parseInt(scoreStrArr[j]);
+
+				Subject subject = new Subject(title, score);
+				subjects.add(subject);
+			}
+
+			int num = Integer.parseInt(numStr);
+			Student student = new Student(num, name, grade, subjects);
+			this.students.add(student);
+			this.students.get(i).calculateGrade();
 		}
-		
-		
 	}
 
 	// 실행
 	public void run() {
+		
+		this.load();
+		
 		// 메뉴출력
 		while (true) {
 
