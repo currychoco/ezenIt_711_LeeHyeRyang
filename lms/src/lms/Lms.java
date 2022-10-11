@@ -1,6 +1,8 @@
 package lms;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -10,11 +12,13 @@ public class Lms {
 	private int menu;
 	private int sel;
 	private ArrayList<Student> students;
+	private FileManager fileManager;
 
 	public Lms(String brand) {
 		this.brand = brand;
 		this.sc = new Scanner(System.in);
 		this.students = new ArrayList<>();
+		fileManager = new FileManager();
 	}
 
 	// 메뉴 출력
@@ -95,6 +99,9 @@ public class Lms {
 		String name = this.sc.next();
 		int number = makeRandomNumber();
 		this.students.add(new Student(number, name));
+		System.out.print("학생이 수강할 기본 과목 : ");
+		String title = this.sc.next();
+		this.students.get(this.students.size() - 1).addSubject(title);
 	}
 
 	// 과목 추가
@@ -153,24 +160,114 @@ public class Lms {
 	}
 
 	// 학생 탈퇴
+	public void deleteStudent() {
+		System.out.print("탈퇴할 학생 학번 : ");
+		int studentNumber = this.sc.nextInt();
+		int idx = isExistStudentNumber(studentNumber);
+		if (idx == -1) {
+			System.out.println("해당 학번의 학생이 존재하지 않습니다.");
+			return;
+		}
+		this.students.remove(idx);
+	}
 
 	// 과목 삭제
+	public void deleteSubject() {
+		System.out.print("과목을 삭제할 학생의 학번 : ");
+		int studentNumber = this.sc.nextInt();
+		int idx = isExistStudentNumber(studentNumber);
+		if (idx == -1) {
+			System.out.println("해당 학번의 학생이 존재하지 않습니다.");
+			return;
+		}
+		System.out.print("삭제할 과목 이름 : ");
+		String title = this.sc.next();
+		ArrayList<String> subjectTitle = this.students.get(idx).getSubjectTitle();
+
+		boolean isExistSubjectTitle = false;
+		int subjectIdx = -1;
+		for (int i = 0; i < subjectTitle.size(); i++) {
+			if (subjectTitle.get(i).equals(title)) {
+				isExistSubjectTitle = true;
+				subjectIdx = i;
+				break;
+			}
+		}
+		if (!isExistSubjectTitle) {
+			System.out.println("해당 학생이 수강하고 있지 않은 과목입니다.");
+			return;
+		}
+		this.students.get(idx).deleteSubject(subjectIdx);
+	}
 
 	// 정렬
+	public void sort() {
+		for (int i = 0; i < this.students.size() - 1; i++) {
+			for (int j = i + 1; j < this.students.size(); j++) {
+				if (this.students.get(i).getNumber() > this.students.get(j).getNumber()) {
+					Collections.swap(this.students, i, j);
+				}
+			}
+		}
+	}
 
 	// 출력
 	public void printStudents() {
-		System.out.printf("-----%s-----", this.brand);
+		System.out.printf("-----%s-----\n", this.brand);
 		for (Student s : this.students) {
-			System.out.printf("학번 : %d, 이름 : %s, 성적 : %s, 과목 : ", s.getNumber(), s.getGrade(), s.getName());
-			s.printSubject();
-			System.out.println();
+			System.out.printf("학번 : %d, 이름 : %s, 성적 : %s, 과목 : ", s.getNumber(), s.getName(), s.getGrade());
+			System.out.println(s.printSubject());
 		}
 	}
 
 	// 저장
+	public void save() {
+		String data = "";
+		for (int i = 0; i < this.students.size(); i++) {
+			data += this.students.get(i).getNumber() + "/" + this.students.get(i).getName() + "/"
+					+ this.students.get(i).getGrade() + "/";
+			ArrayList<String> titles = this.students.get(i).getSubjectTitle();
+			for (int j = 0; j < titles.size(); j++) {
+				data += titles.get(j);
+				if (j < titles.size() - 1) {
+					data += ",";
+				} else {
+					data += "/";
+				}
+			}
+			for (int j = 0; j < titles.size(); j++) {
+				data += this.students.get(i).getScore(j);
+				if (j < titles.size() - 1) {
+					data += ",";
+				}
+			}
+
+			if (i < this.students.size() - 1) {
+				data += "\n";
+			}
+		}
+		this.fileManager.save(data);
+	}
 
 	// 로드
+	public void load() {
+		String data = this.fileManager.load();
+		if (data.equals("실패")) {
+			System.out.println("로드 실패");
+			return;
+		}
+
+		String[] temp = data.split("\n");
+		String[][] studentsDataTemp = new String[temp.length][5];
+		for (int i = 0; i < temp.length; i++) {
+			studentsDataTemp[i] = temp[i].split("/");
+			System.out.println(Arrays.toString(studentsDataTemp[i])); // 확인
+		}
+		
+		
+	}
+
+	// 실행
 	public void run() {
 		// 메뉴출력
 		while (true) {
@@ -188,15 +285,21 @@ public class Lms {
 					this.modificationScore();
 				}
 			} else if (menu == 2) {
+				this.printDeleteMenu();
 
+				if (sel == 1) {
+					this.deleteStudent();
+				} else if (sel == 2) {
+					this.deleteSubject();
+				}
 			} else if (menu == 3) {
-
+				this.sort();
 			} else if (menu == 4) {
 				this.printStudents();
 			} else if (menu == 5) {
-
+				this.save();
 			} else if (menu == 6) {
-
+				this.load();
 			} else if (menu == 7) {
 				System.out.println("프로그램을 종료합니다.");
 				break;

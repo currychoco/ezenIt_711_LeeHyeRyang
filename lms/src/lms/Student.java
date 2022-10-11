@@ -63,15 +63,23 @@ public class Student {
 		return subjectTitles;
 	}
 
-	// 수강하고 있는 과목 정보 출력하기
-	public void printSubject() {
+	// 수강하고 있는 과목 정보 넘겨주기
+	public String printSubject() {
+		String data = "";
 		for (int i = 0; i < this.subjects.size(); i++) {
-			System.out.printf("%s(%d)", this.subjects.get(i).getTitle(), this.subjects.get(i).getScore());
+			data += this.subjects.get(i).getTitle() + "(" + this.subjects.get(i).getScore() + ")";
 			if (i < this.subjects.size() - 1) {
-				System.out.print(", ");
+				data += ", ";
 			}
 		}
+		return data;
 	}
+	
+	//과목 점수 넘기기
+	public int getScore(int idx) {
+		return this.subjects.get(idx).getScore();
+	}
+	
 
 	// 학생이 수강하고 있는 과목 점수 수정하기
 	public void setSubjectScores(int idx, int score) {
@@ -81,5 +89,10 @@ public class Student {
 	// 과목 추가
 	public void addSubject(String title) {
 		this.subjects.add(new Subject(title));
+	}
+	
+	//과목 삭제하기
+	public void deleteSubject(int idx) {
+		this.subjects.remove(idx);
 	}
 }

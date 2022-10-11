@@ -8,6 +8,8 @@ public class Subject {
 		this.title = title;
 	}
 	
+	
+	//getter & setter
 	public String getTitle() {
 		return this.title;
 	}
