@@ -5,7 +5,7 @@ import java.util.Random;
 public class Unit {
 	private int level;
 	private String name;
-	private final int MAX_HP;
+	private int max_hp;
 	private int hp;
 	private int damage;
 	private int defense;
@@ -16,7 +16,7 @@ public class Unit {
 	public Unit(int level, String name, int hp, int damage, int defense, int critical, int exp) {
 		this.level = level;
 		this.name = name;
-		this.MAX_HP = hp;
+		this.max_hp = hp;
 		this.damage = damage;
 		this.defense = defense;
 		this.critical = critical;
@@ -24,6 +24,10 @@ public class Unit {
 		this.alive = true;
 	}
 
+	public void setMaxHp(int hp) {
+		max_hp = hp;
+	}
+	
 	public int getLevel() {
 		return level;
 	}
@@ -33,7 +37,7 @@ public class Unit {
 	}
 
 	public int getMAX_HP() {
-		return MAX_HP;
+		return max_hp;
 	}
 
 	public int getHp() {
@@ -91,7 +95,7 @@ public class Unit {
 	// 공격
 	public void attack(Unit unit) {
 		boolean critical = criticalHit();
-		int damage = this.damage;
+		int damage = this.damage + this.level;
 		if (critical) {
 			damage *= 2;
 		}

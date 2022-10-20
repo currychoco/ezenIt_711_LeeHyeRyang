@@ -1,11 +1,13 @@
-package equipment;
+package potion;
 
-public class Equipment {
+public class Potion {
 	private String name;
+	private int hp;
 	private int price;
 
-	public Equipment(String name, int price) {
+	public Potion(String name, int hp, int price) {
 		this.name = name;
+		this.hp = hp;
 		this.price = price;
 	}
 
@@ -13,8 +15,11 @@ public class Equipment {
 		return name;
 	}
 
+	public int getHp() {
+		return hp;
+	}
+	
 	public int getPrice() {
 		return price;
 	}
-
 }
