@@ -8,9 +8,4 @@ public class WoodSword extends Weapon{
 		super("나무검", 10, 2);
 	}
 	
-	private WoodSword woodSword = new WoodSword();
-	public WoodSword getWoodSowrd() {
-		return woodSword;
-	}
-
 }
