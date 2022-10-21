@@ -26,6 +26,7 @@ public class Shop {
 	// 상점 메뉴 출력
 	public void printMenu() {
 		System.out.println("-------ShopMenu-------");
+		this.printGold();
 		System.out.println("(1)무기 구매");
 		System.out.println("(2)방어구 구매");
 		System.out.println("(3)반지 구매");
@@ -33,7 +34,7 @@ public class Shop {
 		System.out.println("(5)물건 판매");
 		System.out.println("(0)뒤로가기");
 	}
-	
+
 	// 현재 가지고 있는 금액 보여주기
 	public void printGold() {
 		System.out.printf("보유 GOLD : %d\n", Hero.getGold());
@@ -69,7 +70,8 @@ public class Shop {
 		this.printGold();
 		ArrayList<Ring> ringList = getEquipmentList.getRingList();
 		for (int i = 0; i < ringList.size(); i++) {
-			System.out.printf("%d. [%s] 크리티컬 확률 : %d 가격 : %d\n", (i + 1), ringList.get(i).getName(), ringList.get(i).getCritical(), ringList.get(i).getPrice());
+			System.out.printf("%d. [%s] 크리티컬 확률 : %d 가격 : %d\n", (i + 1), ringList.get(i).getName(),
+					ringList.get(i).getCritical(), ringList.get(i).getPrice());
 		}
 		System.out.println("0. 뒤로가기");
 	}
@@ -80,8 +82,10 @@ public class Shop {
 		this.printGold();
 		ArrayList<Potion> potionList = getPotionList.getPotionList();
 		for (int i = 0; i < potionList.size(); i++) {
-			System.out.printf("%d. [%s] 회복량 : %d 가격 : %d\n", (i + 1), potionList.get(i).getName(), potionList.get(i).getHp(), potionList.get(i).getPrice());
+			System.out.printf("%d. [%s] 회복량 : %d 가격 : %d\n", (i + 1), potionList.get(i).getName(),
+					potionList.get(i).getHp(), potionList.get(i).getPrice());
 		}
+		System.out.println("0. 뒤로가기");
 	}
 
 	// 가지고 있는 팔 장비 보여주기
@@ -92,6 +96,7 @@ public class Shop {
 		for (int i = 0; i < list.size(); i++) {
 			System.out.printf("%d. [%s]\n", (i + 1), list.get(i).getName());
 		}
+		System.out.println("0. 뒤로가기");
 	}
 
 	// 물약 구매할 때
@@ -142,7 +147,14 @@ public class Shop {
 
 	// 물약 선택
 	public Potion getPotion(int idx) {
-		Potion potion = getPotionList.getPotionList().get(idx);
+
+		Potion potion;
+		if (idx < 0 || idx >= getPotionList.getPotionList().size()) {
+			potion = null;
+		} else {
+			potion = getPotionList.getPotionList().get(idx);
+		}
+
 		return potion;
 	}
 
@@ -156,12 +168,17 @@ public class Shop {
 		}
 	}
 
-	//팔 장비 선택
+	// 팔 장비 선택
 	public Equipment getSellEquipment(int idx) {
-		Equipment equipment = Hero.getEquipments().get(idx);
+		Equipment equipment;
+		if(idx < 0 || idx >= Hero.getEquipments().size()) {
+			equipment = null;
+		}else {
+			equipment = Hero.getEquipments().get(idx);
+		}
 		return equipment;
 	}
-	
+
 	// 장비를 판매했을 때
 	public void sellEquipment(Equipment equipment) {
 		int price = (int) (equipment.getPrice() * 0.7);

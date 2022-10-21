@@ -14,6 +14,7 @@ public class Hero extends Unit {
 	private static int whitePotion = 0;
 	private static int elixir = 0;
 	private static ArrayList<Equipment> equipments = new ArrayList<>();
+	private static ArrayList<Hero> partyMembers = new ArrayList<>();
 
 	private boolean party;
 	private Weapon weapon;
@@ -23,17 +24,22 @@ public class Hero extends Unit {
 	private boolean equipRing;
 	private boolean equipArmor;
 	private int MAX_EXP = getLevel() * 50;
-	private boolean inParty;
 
-	public Hero(String name, int hp, int damage, int defense, int critical, int exp) {
-		super(1, name, hp, damage, defense, critical, exp);
+	protected Hero(String name, int hp, int damage, int defense, int critical) {
+		super(1, name, hp, damage, defense, critical, 0);
 		this.weapon = null;
 		this.ring = null;
 		this.armor = null;
 	}
 
+	
+	
 	public static ArrayList<Equipment> getEquipments() {
 		return equipments;
+	}
+	
+	public static ArrayList<Hero> getPartyMembers(){
+		return partyMembers;
 	}
 
 	public static void sellEquipment(Equipment equipment) {
@@ -59,10 +65,6 @@ public class Hero extends Unit {
 		Hero.equipments.add(equipment);
 	}
 
-	public void setInParty(boolean inParty) {
-		this.inParty = inParty;
-	}
-
 	public static int getRedPotion() {
 		return redPotion;
 	}
@@ -79,8 +81,12 @@ public class Hero extends Unit {
 		return gold;
 	}
 
-	public boolean isParty() {
+	public boolean getParty() {
 		return party;
+	}
+	
+	public void setParty(boolean bool){
+		this.party = bool;
 	}
 
 	public Equipment getWeapon() {
@@ -111,10 +117,6 @@ public class Hero extends Unit {
 		return MAX_EXP;
 	}
 
-	public boolean getInParty() {
-		return inParty;
-	}
-
 	// 몬스터를 처리했을 때
 	public void killMoster(Booty booty) {
 		this.setExp(getExp() + booty.getExp());
@@ -127,8 +129,8 @@ public class Hero extends Unit {
 		}
 	}
 
-	// 장비를 장착헀을 때
-
+	// 장비를 장착헀을 때	
+	
 	public void equipWeapon(Weapon weapon) {
 		if (equipWeapon) {
 			equipments.add(this.weapon);

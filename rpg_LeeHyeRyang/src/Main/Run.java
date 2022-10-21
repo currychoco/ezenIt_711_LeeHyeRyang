@@ -1,12 +1,11 @@
 package Main;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import equipment.Equipment;
-import equipment.GetEquipmentList;
-import equipment.Weapon;
-import potion.GetPotionList;
+import guild.Guild;
+import hero.GetHeroList;
+import potion.Potion;
 import shop.Shop;
 
 public class Run {
@@ -14,19 +13,21 @@ public class Run {
 	private int menu;
 	private int sel;
 	private int choice;
+	private int idx;
 	private Scanner sc;
 	private Shop shop;
-	private GetEquipmentList getEquipmentList;
-	private GetPotionList getPotionList;
+	private Guild guild;
+	private GetHeroList getHeroList;
 
 	public Run() {
 		sc = new Scanner(System.in);
 		menu = -1;
 		sel = -1;
 		choice = -1;
+		idx = -1;
 		shop = new Shop();
-		getEquipmentList = GetEquipmentList.getInstance();
-		getPotionList = GetPotionList.getInstance();
+		guild = new Guild();
+		getHeroList = GetHeroList.getInstance();
 	}
 
 	// 정수 확인 메소드
@@ -46,12 +47,12 @@ public class Run {
 
 	public void printMainMenu() {
 		System.out.println("-------Menu-------");
-		System.out.println("[1] 길드원 보기");
-		System.out.println("[2] 파티원 보기");
-		System.out.println("[3] 상점 보기");
-		System.out.println("[4] 전투하기");
-		System.out.println("[5] 저장하기");
-		System.out.println("[6] 불러오기");
+		System.out.println("[1] 길드");
+		System.out.println("[2] 파티");
+		System.out.println("[3] 상점");
+		System.out.println("[4] 전투");
+		System.out.println("[5] 저장");
+		System.out.println("[6] 로드");
 		System.out.println("[0] 게임 끝내기");
 	}
 
@@ -62,11 +63,58 @@ public class Run {
 			this.printMainMenu();
 			menu = checkInteger();
 
-			// 길드원 보기
+			// 길드
 			if (menu == 1) {
+				while (true) {
+					guild.printGuildMenu();
+					sel = checkInteger();
 
+					// 길드원 확인
+					if (sel == 1) {
+						guild.printGuildMember();
+					}
+					// 장비 장착
+					else if (sel == 2) {
+						guild.printGetEquipmentMember();
+						choice = checkInteger();
+						idx = choice - 1; // 장비를 장착할 길드원의 인덱스
+						if(choice == 0) {
+							continue;
+						}
+						
+						guild.printEquipments();
+						int num = checkInteger() - 1; // 장비 인덱스
+						Equipment equipment = guild.getEquipEquipment(num);
+
+						if (equipment != null) {
+							getHeroList.getEquipEquipment(idx, equipment);
+						} else {
+							System.out.println("존재하지 않는 장비 번호입니다.");
+						}
+
+					}
+					// 장비 해제
+					else if (sel == 3) {
+						guild.printMemberToReleaseEquipment();
+						choice = checkInteger();
+						idx = choice - 1;
+						
+						guild.printPart();
+						int part = checkInteger();
+						
+						guild.releaseEquipment(idx, part);
+					}
+					// 길드원 추가
+					else if (sel == 4) {
+
+					}
+					// 뒤로 가기
+					else if (sel == 0) {
+						break;
+					}
+				}
 			}
-			// 파티원 보기
+			// 파티
 			else if (menu == 2) {
 
 			}
@@ -90,22 +138,39 @@ public class Run {
 							shop.printRingMenu();
 						}
 						choice = checkInteger();
-						int idx = choice - 1;
+						idx = choice - 1;
 						Equipment equipment = shop.getEquipment(sel, idx);
 						if (equipment != null) {
 							shop.buyEquipment(equipment);
-						} else {
+						} else if (choice != 0) {
 							System.out.println("해당 번호의 장비가 없습니다.");
 						}
 					}
-					
+
 					// 물약 구매
 					else if (sel == 4) {
 						// 물약 메뉴 출력
 						shop.printPotionMenu();
+						choice = checkInteger();
+						idx = choice - 1;
+						Potion potion = shop.getPotion(idx);
+						if (potion != null) {
+							shop.buyPotion(potion);
+						} else if (choice != 0) {
+							System.out.println("해당 번호의 물약이 없습니다.");
+						}
 					}
 					// 물건 판매
 					else if (sel == 5) {
+						shop.sellEquipmentMenu();
+						choice = checkInteger();
+						idx = choice - 1;
+						Equipment equipment = shop.getSellEquipment(idx);
+						if (equipment != null) {
+							shop.sellEquipment(equipment);
+						} else if (choice != 0) {
+							System.out.println("해당 번호의 장비가 없습니다.");
+						}
 
 					}
 					// 뒤로 가기

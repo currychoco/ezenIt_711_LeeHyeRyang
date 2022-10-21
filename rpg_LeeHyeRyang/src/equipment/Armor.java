@@ -1,16 +1,9 @@
 package equipment;
 
-public class Armor extends Equipment{
+public class Armor extends Equipment {
 
-	private int defense;
-	
 	public Armor(String name, int price, int defense) {
-		super(name, price);
-		this.defense = defense;
+		super(name, price, 0, defense, 0);
 	}
 
-	public int getDefense() {
-		return defense;
-	}
-	
 }

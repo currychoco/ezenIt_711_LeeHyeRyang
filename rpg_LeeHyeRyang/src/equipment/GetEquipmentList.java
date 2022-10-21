@@ -23,37 +23,32 @@ public class GetEquipmentList {
 		return instance;
 	}
 	
-	public ArrayList<Weapon> weaponList(){
+	private GetEquipmentList() {
 		weaponList = new ArrayList<>();
 		weaponList.add(new WoodSword());
 		weaponList.add(new IronSword());
 		weaponList.add(new DiamondSword());
-
-		return weaponList;
-	}
-	public ArrayList<Weapon> getWeaponList(){
+		
 		armorList = new ArrayList<>();
-		weaponList.add(new WoodSword());
-		weaponList.add(new IronSword());
-		weaponList.add(new DiamondSword());
-
-		return weaponList;
-	}
-	
-	public ArrayList<Armor> getArmorList(){
-		ringList = new ArrayList<>();
 		armorList.add(new FabricArmor());
 		armorList.add(new IronArmor());
 		armorList.add(new DiamondArmor());
 		
+		ringList = new ArrayList<>();
+		ringList.add(new GrassRing());
+		ringList.add(new SilverRing());
+		ringList.add(new DiamondRing());
+	}
+	
+	public ArrayList<Weapon> getWeaponList(){
+		return weaponList;
+	}
+	
+	public ArrayList<Armor> getArmorList(){
 		return armorList;
 	}
 
 	public ArrayList<Ring> getRingList(){
-		ringList.add(new GrassRing());
-		ringList.add(new SilverRing());
-		ringList.add(new DiamondRing());
-		
 		return ringList;
 	}
 	

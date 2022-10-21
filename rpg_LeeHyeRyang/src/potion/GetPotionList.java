@@ -13,14 +13,14 @@ public class GetPotionList {
 
 	private GetPotionList() {
 		potionList = new ArrayList<>();
-	}
-
-	// 물약 리스트
-	public ArrayList<Potion> getPotionList() {
 		potionList.add(new RedPotion());
 		potionList.add(new WhitePotion());
 		potionList.add(new Elixir());
 
+	}
+
+	// 물약 리스트
+	public ArrayList<Potion> getPotionList() {
 		return potionList;
 	}
 }
