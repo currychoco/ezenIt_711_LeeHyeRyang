@@ -17,6 +17,7 @@ public class Unit {
 		this.level = level;
 		this.name = name;
 		this.max_hp = hp;
+		this.hp = max_hp;
 		this.damage = damage;
 		this.defense = defense;
 		this.critical = critical;
@@ -99,13 +100,18 @@ public class Unit {
 		if (critical) {
 			damage *= 2;
 		}
-		unit.setHp(unit.getHp() - damage - unit.defense);
-		if (critical) {
-			System.out.printf("%s의 치명적인 공격!", this.getName());
+		damage -= unit.defense;
+		if(damage <= 0 ) {
+			damage = 1;
 		}
-		System.out.printf("%s(이)가 %s(을)에게 %d만큼의 데미지를 입혔습니다.", this.getName(), unit.getName(), damage);
+		unit.setHp(unit.getHp() - damage);
+		if (critical) {
+			System.out.printf("%s의 치명적인 공격!\n", this.getName());
+		}
+		System.out.printf("%s(이)가 %s에게 %d만큼의 데미지를 입혔습니다.\n", this.getName(), unit.getName(), damage);
 
 		if (unit.hp <= 0) {
+			unit.hp = 0;
 			unit.setAlive(false);
 		}
 	}

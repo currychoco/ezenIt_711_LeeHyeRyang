@@ -23,7 +23,6 @@ public class Guild {
 		System.out.println("(1) 길드원 확인");
 		System.out.println("(2) 장비 장착");
 		System.out.println("(3) 장비 해제");
-		System.out.println("(4) 길드원 추가");
 		System.out.println("(0) 뒤로 가기");
 	}
 

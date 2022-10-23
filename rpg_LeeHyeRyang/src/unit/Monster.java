@@ -16,4 +16,9 @@ public class Monster extends Unit {
 		Booty booty = new Booty(this.getExp(), this.gold);
 		return booty;
 	}
+
+	public int getGold() {
+		return gold;
+	}
+	
 }

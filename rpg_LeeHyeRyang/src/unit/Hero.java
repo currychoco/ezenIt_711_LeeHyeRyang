@@ -123,9 +123,11 @@ public class Hero extends Unit {
 		gold += booty.getGold();
 
 		if (getExp() >= MAX_EXP) {
+			System.out.println("[레벨업!!!]");
 			setExp(getExp() - MAX_EXP);
 			setLevel(getLevel() + 1);
 			setMaxHp(getMAX_HP() + 50);
+			setHp(getMAX_HP());
 		}
 	}
 

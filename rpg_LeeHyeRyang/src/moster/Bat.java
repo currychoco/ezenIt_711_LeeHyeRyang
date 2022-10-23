@@ -5,7 +5,7 @@ import unit.Monster;
 public class Bat extends Monster{
 	
 	public Bat() {
-		super(1, "BAT", 10, 4, 1, 1, 3, 10);
+		super(1, "BAT", 10, 4, 1, 1, 10, 10);
 	}
 
 }

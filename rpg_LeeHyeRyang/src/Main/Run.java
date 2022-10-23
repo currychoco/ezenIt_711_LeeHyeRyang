@@ -2,11 +2,18 @@ package Main;
 
 import java.util.Scanner;
 
+import dungeon.BossDungeon;
+import dungeon.Dungeon1;
+import dungeon.Dungeon2;
+import dungeon.Dungeon3;
+import dungeon.PrintStage;
 import equipment.Equipment;
 import guild.Guild;
 import hero.GetHeroList;
+import party.Party;
 import potion.Potion;
 import shop.Shop;
+import unit.Hero;
 
 public class Run {
 
@@ -18,6 +25,13 @@ public class Run {
 	private Shop shop;
 	private Guild guild;
 	private GetHeroList getHeroList;
+	private Party party;
+	private PrintStage stage;
+	private Dungeon1 stage1;
+	private Dungeon2 stage2;
+	private Dungeon3 stage3;
+	private BossDungeon bossStage;
+	
 
 	public Run() {
 		sc = new Scanner(System.in);
@@ -28,6 +42,8 @@ public class Run {
 		shop = new Shop();
 		guild = new Guild();
 		getHeroList = GetHeroList.getInstance();
+		party = new Party();
+		stage = new PrintStage();
 	}
 
 	// 정수 확인 메소드
@@ -51,8 +67,6 @@ public class Run {
 		System.out.println("[2] 파티");
 		System.out.println("[3] 상점");
 		System.out.println("[4] 전투");
-		System.out.println("[5] 저장");
-		System.out.println("[6] 로드");
 		System.out.println("[0] 게임 끝내기");
 	}
 
@@ -104,10 +118,6 @@ public class Run {
 						
 						guild.releaseEquipment(idx, part);
 					}
-					// 길드원 추가
-					else if (sel == 4) {
-
-					}
 					// 뒤로 가기
 					else if (sel == 0) {
 						break;
@@ -116,7 +126,34 @@ public class Run {
 			}
 			// 파티
 			else if (menu == 2) {
-
+				while(true) {
+					party.printPartyMenu();
+					sel = checkInteger();
+					
+					// 파티원 출력
+					if(sel == 1) {
+						party.printPartyMembers();
+					}
+					// 파티원 가입
+					else if(sel == 2) {
+						party.printGuildMembers();
+						choice = checkInteger(); // Hero인덱스
+						idx = choice - 1;
+						party.joinParty(idx);
+					}
+					// 파티원 탈퇴
+					else if(sel == 3) {
+						party.printPartyMembers();
+						choice = checkInteger();
+						idx = choice - 1;
+						party.exitParty(idx);
+					}
+					// 뒤로가기
+					else if(sel == 0) {
+						break;
+					}
+							
+				}
 			}
 			// 상점 보기
 			else if (menu == 3) {
@@ -182,15 +219,32 @@ public class Run {
 			}
 			// 전투하기
 			else if (menu == 4) {
+				
+				if(Hero.getPartyMembers().size() == 0) {
+					System.out.println("파티원이 없습니다.");
+					continue;
+				}
 
-			}
-			// 저장하기
-			else if (menu == 5) {
-
-			}
-			// 불러오기
-			else if (menu == 6) {
-
+				sel = -1;
+				while(sel < 0 || sel > 4) {
+					stage.printStage();
+					sel = checkInteger();
+				}
+				
+				if(sel == 1) {
+					stage1 = new Dungeon1();
+					stage1.fight();
+				}else if(sel == 2) {
+					stage2 = new Dungeon2();
+					stage2.fight();
+				}else if(sel == 3) {
+					stage3 = new Dungeon3();
+					stage3.fight();
+				}else if(sel == 4) {
+					bossStage = new BossDungeon();
+					bossStage.fight();
+				}
+				
 			}
 			// 종료하기
 			else if (menu == 0) {
