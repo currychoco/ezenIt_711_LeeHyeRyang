@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>mvc2_board</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <!-- Servlet 등록 및 맵핑 -->
+
+  <servlet>
+  	<servlet-name>boardDelete</servlet-name>
+  	<servlet-class>board.boardDeleteAction</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>boardDelete</servlet-name>
+  	<url-pattern>/boardDelete</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+  	<servlet-name>boardWrite</servlet-name>
+  	<servlet-class>board.boardWriteAction</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>boardWrite</servlet-name>
+  	<url-pattern>/boardWrite</url-pattern>
+  </servlet-mapping>
+
+ <servlet>
+  	<servlet-name>boardUpdate</servlet-name>
+  	<servlet-class>board.boardUpdateAction</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>boardUpdate</servlet-name>
+  	<url-pattern>/boardUpdate</url-pattern>
+  </servlet-mapping>
+  
+  <!-- JSP 파일 등록 및 맵핑 -->
+  <servlet>
+  	<servlet-name>board</servlet-name>
+  	<jsp-file>/board.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>board</servlet-name>
+  	<url-pattern>/board</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>index</servlet-name>
+  	<jsp-file>/index.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>index</servlet-name>
+  	<url-pattern>/index</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>alertAndBack</servlet-name>
+  	<jsp-file>/alertAndBack.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>alertAndBack</servlet-name>
+  	<url-pattern>/alertAndBack</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>alertAndRedirect</servlet-name>
+  	<jsp-file>/alertAndRedirect.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>alertAndRedirect</servlet-name>
+  	<url-pattern>/alertAndRedirect</url-pattern>
+  </servlet-mapping>
+ 
+  <servlet>
+  	<servlet-name>notice</servlet-name>
+  	<jsp-file>/notice.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>notice</servlet-name>
+  	<url-pattern>/notice</url-pattern>
+  </servlet-mapping>
+  
+    <servlet>
+  	<servlet-name>noticeView</servlet-name>
+  	<jsp-file>/noticeView.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>noticeView</servlet-name>
+  	<url-pattern>/noticeView</url-pattern>
+  </servlet-mapping>
+  
+ <servlet> 
+  <servlet-name>rental</servlet-name>
+  	<jsp-file>/rental.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>rental</servlet-name>
+  	<url-pattern>/rental</url-pattern>
+  </servlet-mapping>
+  
+ <servlet> 
+  <servlet-name>login</servlet-name>
+  	<jsp-file>/loginForm.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>login</servlet-name>
+  	<url-pattern>/login</url-pattern>
+  </servlet-mapping>
+  
+ <servlet> 
+  <servlet-name>join</servlet-name>
+  	<jsp-file>/joinForm.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>join</servlet-name>
+  	<url-pattern>/join</url-pattern>
+  </servlet-mapping>
+ 
+ <servlet> 
+  <servlet-name>rentCar</servlet-name>
+  	<jsp-file>/rentForm.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>rentCar</servlet-name>
+  	<url-pattern>/rentCar</url-pattern>
+  </servlet-mapping> 
+  
+ <servlet> 
+  <servlet-name>myPage</servlet-name>
+  	<jsp-file>/myPageView.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>myPage</servlet-name>
+  	<url-pattern>/myPage</url-pattern>
+  </servlet-mapping> 
+  
+  <servlet> 
+  <servlet-name>guide</servlet-name>
+  	<jsp-file>/guide.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>guide</servlet-name>
+  	<url-pattern>/guide</url-pattern>
+  </servlet-mapping> 
+
+</web-app>
