@@ -2,7 +2,6 @@ package party;
 
 import java.util.ArrayList;
 
-import guild.Guild;
 import hero.GetHeroList;
 import unit.Hero;
 
